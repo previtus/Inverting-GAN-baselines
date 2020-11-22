@@ -52,3 +52,11 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.0/lib64
 ## Running
 
 _(To be continued ... either use each code's instructions, or write your own "runner" ...)_
+
+Prepare your conda environments (in-domain-gan) and calls to load CUDA (cuda-9.0-en) and then you can simply:
+
+```
+source cuda-9.0-en
+conda activate in-domain-gan
+python ...
+```
