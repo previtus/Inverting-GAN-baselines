@@ -25,7 +25,7 @@ It's possible to switch between CUDA versions depending on which project you run
 
 ### CUDA 9 codes
 
-Let's start by loading the CUDA 9 paths (you can also have this in a file cuda-9.0-env and run '''source cuda-9.0-en '''):
+Let's start by loading the CUDA 9 paths (you can also have this in a file cuda-9.0-env and run '''source cuda-9.0-env '''):
 
 ```
 export PATH=$PATH:/usr/local/cuda-9.0/bin
@@ -41,7 +41,7 @@ PS: Now your should also test with ```python -c "from tensorflow.python.client i
 
 ### CUDA 10 codes
 
-Same as in the CUDA 9 example, except your paths should point to /usr/local/cuda-10.0 and you would load different Anaconda environments.
+Same as in the CUDA 9 example, except your paths should point to /usr/local/cuda-10.0 (let's call this one cuda-10.0-env) and you would load different Anaconda environments.
 
 ```
 export PATH=$PATH:/usr/local/cuda-10.0/bin
@@ -53,10 +53,10 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.0/lib64
 
 _(To be continued ... either use each code's instructions, or write your own "runner" ...)_
 
-Prepare your conda environments (in-domain-gan) and calls to load CUDA (cuda-9.0-en) and then you can simply:
+Prepare your conda environments (in-domain-gan) and calls to load CUDA (cuda-9.0-env) and then you can simply:
 
 ```
-source cuda-9.0-en
+source cuda-9.0-env
 conda activate in-domain-gan
 python ...
 ```
