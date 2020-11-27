@@ -1,0 +1,33 @@
+handler will be a generic class that can be extended by specific implementations for each of the baselines ...
+
+Should be able to do:
+
+- load a model from a path
+
+- project image into a latent, measure speed
+- project latent into a reconstruction, measure speed
+
+
+
+
+(will be used by?)
+- can use a renderer - which shows results and fps
+- can use a camera - which takes images and feeds them in (maybe zooms to face with dlib)
+
+
+(later)
+- can do alpha-blend between two models
+   - in: model1, model2, alpha
+   - will be used by something else, maybe blender ?
+
+
+(parent will know how to)
+- save image
+- load image
+- input camera
+- output renderer
+
+- load from folder
+
+- save to folder
+
