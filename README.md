@@ -60,3 +60,25 @@ source cuda-9.0-env
 conda activate in-domain-gan
 python ...
 ```
+
+
+
+# Full Commands:
+
+
+```
+
+## test alae
+source /home/vitek/cuda-10.0-env
+conda activate ALAE
+cd /home/vitek/Vitek/python_codes/Inverting-GAN-baselines/
+python ALAE_demos.py
+
+
+## test p2s2p
+source /home/vitek/cuda-10.0-env
+conda activate psp_env
+cd /home/vitek/Vitek/python_codes/Inverting-GAN-baselines/
+python pixel2style2pixel_demos.py
+
+```
