@@ -109,6 +109,8 @@ if run_dlib:
 else:
   input_image = open_image(image_path)
 
+print("input_image", type(input_image)) # PIL image
+
 input_image.resize((256, 256))
 
 """## Step 6: Perform Inference"""
@@ -205,11 +207,23 @@ while True:
 
     frame = crop_center(frame, cropSize, cropSize)
 
+    print("INPUT IMAGE:", type(frame), frame.shape)
+
     print("cropped frame.shape", frame.shape)
     frame = Image.fromarray(frame, 'RGB')
 
     transformed_image = process_image(frame)
     latents = encode(transformed_image, net)
+
+    print("INTERMEDIATE LATENT:", type(latents), latents.shape)
+
+    """
+    INPUT IMAGE: <class 'numpy.ndarray'> (480, 480, 3)
+    INTERMEDIATE LATENT: <class 'torch.Tensor'> torch.Size([1, 18, 512])
+    OUTPUT IMAGE: <class 'numpy.ndarray'> (1024, 1024, 3)
+    """
+
+
     result_image = decode(latents, net)
 
     vis_frame = frame.resize((1024,1024))
@@ -220,6 +234,7 @@ while True:
     reconstruction = np.asarray(reconstruction)
     reconstruction = cv2.cvtColor(reconstruction, cv2.COLOR_BGR2RGB)
 
+    print("OUTPUT IMAGE:", type(reconstruction), reconstruction.shape)
 
     #side_by_side = np.hstack((input_vis_image, output_image))
     side_by_side = np.hstack((vis_frame, reconstruction))

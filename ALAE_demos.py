@@ -257,15 +257,29 @@ while True:
     frame = crop_center(frame, cropSize, cropSize)
 
 
+    print("INPUT IMAGE:", type(frame), frame.shape)
+
     #print(type(frame), frame.shape)
     #img = load_image(image_path)
     img = frame
     img_tensor, resized_image = image_to_tensor(img)
     latents = encode_from_image(img_tensor)
 
+    print("INTERMEDIATE LATENT:", type(latents), latents.shape)
+
+
     decoded = decode(latents)
     reconstruction = postprocess_to_cpu_to_numpy(decoded)
     reconstruction = cv2.cvtColor(reconstruction, cv2.COLOR_BGR2RGB)
+
+    print("OUTPUT IMAGE:", type(reconstruction), reconstruction.shape)
+
+
+    """
+    INPUT IMAGE: <class 'numpy.ndarray'> (480, 480, 3)
+    INTERMEDIATE LATENT: <class 'torch.Tensor'> torch.Size([1, 18, 512])
+    OUTPUT IMAGE: <class 'numpy.ndarray'> (1024, 1024, 3)
+    """
 
     side_by_side = np.hstack((resized_image, reconstruction))
     #plt.imshow(side_by_side)
