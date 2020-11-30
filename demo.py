@@ -28,6 +28,15 @@ while True:
     if not ret:
         print("failed to grab frame")
         break
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    """ (debug output to see if the colors are correct)
+    import matplotlib.pyplot as plt
+    plt.imshow(frame)
+    name = "frame.jpg"
+    plt.savefig(name)
+    plt.close()
+    """
 
     print(frame.shape)
     cropSize = min([frame.shape[0],frame.shape[1]])
@@ -58,6 +67,7 @@ while True:
     print(side_by_side.shape, dim)
 
     side_by_side = cv2.resize(side_by_side, dim, interpolation=cv2.INTER_AREA)
+    side_by_side = cv2.cvtColor(side_by_side, cv2.COLOR_RGB2BGR)
 
     cv2.imshow("test", side_by_side)
 

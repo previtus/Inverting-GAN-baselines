@@ -165,7 +165,7 @@ class ALAE_Handler(GenericHandler):
 
         # to numpy
         asimage = asimage.numpy()
-        asimage = cv2.cvtColor(asimage, cv2.COLOR_BGR2RGB)
+        #asimage = cv2.cvtColor(asimage, cv2.COLOR_BGR2RGB)
 
         return asimage
 
