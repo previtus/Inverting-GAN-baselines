@@ -1,3 +1,7 @@
+print("SWITCH TO ALAE ENV!")
+assert True
+
+
 import sys
 # ALAE repository path so that I can import it here
 REPO_PATH = "/home/vitek/Vitek/python_codes/ALAE"
@@ -43,6 +47,7 @@ torch.set_default_tensor_type('torch.cuda.FloatTensor')
 
 cfg = get_cfg_defaults()
 cfg.merge_from_file(REPO_PATH+"/configs/ffhq.yaml")
+#cfg.merge_from_file(REPO_PATH+"/configs/bedroom.yaml")
 
 
 logger = logging.getLogger("logger")
@@ -94,6 +99,7 @@ def load(checkpointer, model_path):
     return checkpointer.load(ignore_last_checkpoint=False, file_name=model_path)
 
 model_path = "/home/vitek/Vitek/python_codes/ALAE/training_artifacts/ffhq/model_157.pth"
+#model_path = "/home/vitek/Vitek/python_codes/ALAE/training_artifacts/bedroom/model_final.pth"
 extra_checkpoint_data = load(checkpointer, model_path)
 
 model.eval()
@@ -194,6 +200,11 @@ def postprocess_to_cpu_to_numpy(x_rec):
     images = images.numpy()
     return images
 
+def crop_center(img, cropx, cropy):
+    y, x, _ = img.shape
+    startx = x // 2 - (cropx // 2)
+    starty = y // 2 - (cropy // 2)
+    return img[starty:starty + cropy, startx:startx + cropx]
 
 
 """
@@ -243,11 +254,6 @@ while True:
     print(frame.shape)
     cropSize = min([frame.shape[0],frame.shape[1]])
 
-    def crop_center(img, cropx, cropy):
-        y, x, _ = img.shape
-        startx = x // 2 - (cropx // 2)
-        starty = y // 2 - (cropy // 2)
-        return img[starty:starty + cropy, startx:startx + cropx]
     frame = crop_center(frame, cropSize, cropSize)
 
 
@@ -271,9 +277,9 @@ while True:
     w, h, ch = side_by_side.shape
     dim = (int(h/2),int(w/2))
     print(side_by_side.shape, dim)
-    smaller_side_by_side = cv2.resize(side_by_side, dim, interpolation=cv2.INTER_AREA)
+    #side_by_side = cv2.resize(side_by_side, dim, interpolation=cv2.INTER_AREA)
 
-    cv2.imshow("test", smaller_side_by_side)
+    cv2.imshow("test", side_by_side)
 
 
     k = cv2.waitKey(1)
