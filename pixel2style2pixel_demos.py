@@ -39,7 +39,7 @@ sys.path.append(".")
 sys.path.append("..")
 
 from datasets import augmentations
-sys.path.append("/home/vitek/Vitek/python_codes/pixel2style2pixel/utils")
+sys.path.append(REPO_PATH+"/utils")
 from common import tensor2im, log_input_image
 from models.psp import pSp
 
@@ -59,7 +59,7 @@ if os.path.getsize(EXPERIMENT_ARGS['model_path']) < 1000000:
   raise ValueError("Pretrained model was unable to be downlaoded correctly!")
 
 
-model_path = "/home/vitek/Vitek/python_codes/pixel2style2pixel/pretrained_models/psp_ffhq_encode.pt"
+model_path = REPO_PATH+"/pretrained_models/psp_ffhq_encode.pt"
 
 def create_model_from_path(model_path):
     ckpt = torch.load(model_path, map_location='cpu')
@@ -145,8 +145,6 @@ def run_on_batch(inputs, net, latent_mask=None):
 
 latent_mask = None
 
-# PS EDITED  models/psp.py #66 line: resize=False default !!!	def forward(self, x, resize=False, latent_mask=None, input_code=False, randomize_noise=True,
-
 def process_image(input_image):
     #input_image.resize((256, 256))
     img_transforms = EXPERIMENT_ARGS['transform']
@@ -214,23 +212,17 @@ while True:
     latents = encode(transformed_image, net)
     result_image = decode(latents, net)
 
-    #input_vis_image = log_input_image(transformed_image, opts)
-    reconstruction = tensor2im(result_image)
-
-
-    #print(input_vis_image.size)
-    #print(output_image.size)
-
-    #input_vis_image = input_vis_image.resize((1024,1024))
-    #print(input_vis_image.size)
-
     vis_frame = frame.resize((1024,1024))
+    #input_vis_image = log_input_image(transformed_image, opts)
+    #input_vis_image = input_vis_image.resize((1024,1024))
 
+    reconstruction = tensor2im(result_image)
     reconstruction = np.asarray(reconstruction)
     reconstruction = cv2.cvtColor(reconstruction, cv2.COLOR_BGR2RGB)
+
+
     #side_by_side = np.hstack((input_vis_image, output_image))
     side_by_side = np.hstack((vis_frame, reconstruction))
-    #plt.imshow(side_by_side)
 
     end = timer()
     time = (end - start)
@@ -253,7 +245,7 @@ while True:
 
     if (k == ord('x')) or (k%256 == 32):
         # SPACE pressed
-        img_name = "opencv_frame_{}.png".format(img_counter)
+        img_name = "p2s2p_frame_{}.png".format(img_counter)
         cv2.imwrite(img_name, side_by_side)
         print("{} written!".format(img_name))
         img_counter += 1
@@ -263,60 +255,3 @@ cam.release()
 cv2.destroyAllWindows()
 
 
-
-
-
-
-
-
-
-
-
-assert False
-assert False
-assert False
-assert False
-
-with torch.no_grad():
-    print(transformed_image.unsqueeze(0).shape)
-    tic = time.time()
-    latents = encode(transformed_image, net)
-    result_image = decode(latents, net)
-    #result_image = run_on_batch(transformed_image.unsqueeze(0), net, latent_mask)[0]
-    toc = time.time()
-    print('Inference took {:.4f} seconds.'.format(toc - tic))
-    print(result_image.shape)
-
-
-
-
-# (((FOR 1024x1024 input ==> Inference took 1.8569 seconds. ---- but thats wrong)))
-# FOR 256x256 ==> Inference took ~ 0.2 (repeated calls maybe)
-# CHANGED CODE .... ~ https://github.com/eladrich/pixel2style2pixel/issues/5
-
-"""### Visualize Result"""
-
-input_vis_image = log_input_image(transformed_image, opts)
-output_image = tensor2im(result_image)
-
-print(input_vis_image.size)
-print(output_image.size)
-
-
-
-"""
-res = np.concatenate([np.array(input_vis_image.resize((1024, 1024))),
-                          np.array(output_image)], axis=1)
-
-res_image = Image.fromarray(res)
-res_image
-"""
-
-res = np.concatenate([np.array(input_vis_image.resize((256, 256))),
-                          np.array(output_image.resize((256, 256)))], axis=1)
-
-res_image = Image.fromarray(res)
-res_image
-
-plt.imshow(res_image)
-plt.savefig("mygraph.png")
