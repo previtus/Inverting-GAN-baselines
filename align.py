@@ -24,14 +24,13 @@ from timeit import default_timer as timer
 import matplotlib.pyplot as plt
 
 import dlib
-from scripts.align_all_parallel import align_face
+from pixel2style2pixel.align_all_parallel import align_face_img
 
-
-def run_alignment(image_path):
+def run_alignment(image):
   start = timer()
 
-  predictor = dlib.shape_predictor(REPO_PATH+"/shape_predictor_68_face_landmarks.dat")
-  aligned_image = align_face(filepath=image_path, predictor=predictor)
+  predictor = dlib.shape_predictor("/home/vitek/Vitek/python_codes/pixel2style2pixel/shape_predictor_68_face_landmarks.dat")
+  aligned_image = align_face_img(image, predictor=predictor)
   print("Aligned image has shape: {}".format(aligned_image.size))
   end = timer()
   time = (end - start)
@@ -65,8 +64,9 @@ if __name__ == '__main__':
         image_path = path + "/" + paths[image_index]
         print(image_path)
 
+        image = np.asarray(Image.open(image_path))
 
-        aligned_image = run_alignment(image_path)
+        aligned_image = run_alignment(image)
         aligned_image.resize((1024,1024))
         aligned_image = np.array(aligned_image)
         aligned_image = cv2.cvtColor(aligned_image, cv2.COLOR_RGB2BGR)
