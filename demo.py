@@ -11,6 +11,7 @@ handler.load_model()
 from timeit import default_timer as timer
 import numpy as np
 import cv2
+
 cam = cv2.VideoCapture(0)
 cv2.namedWindow("test")
 
@@ -20,6 +21,23 @@ def crop_center(img, cropx, cropy):
     starty = y // 2 - (cropy // 2)
     return img[starty:starty + cropy, startx:startx + cropx]
 
+import dlib
+from pixel2style2pixel.align_all_parallel import align_face_img
+
+def run_alignment(image):
+  start = timer()
+
+  predictor = dlib.shape_predictor("/home/vitek/Vitek/python_codes/pixel2style2pixel/shape_predictor_68_face_landmarks.dat")
+  aligned_image = align_face_img(image, predictor=predictor)
+  print("Aligned image has shape: {}".format(aligned_image.size))
+  end = timer()
+  time = (end - start)
+  print("Aligning took " + str(time) + "s")
+
+  return aligned_image
+
+
+aligning_faces = False
 
 while True:
     start = timer()
@@ -40,8 +58,15 @@ while True:
 
     print(frame.shape)
     cropSize = min([frame.shape[0],frame.shape[1]])
-    image = crop_center(frame, cropSize, cropSize)
-    resized_image = cv2.resize(image, (1024,1024), interpolation=cv2.INTER_AREA)
+
+    if aligning_faces:
+        image = run_alignment(image)
+        image = np.asarray(image)
+        resized_image = image
+    else:
+        image = crop_center(frame, cropSize, cropSize)
+        resized_image = cv2.resize(image, (1024,1024), interpolation=cv2.INTER_AREA)
+
 
     preprocessed_image = handler.preprocess_image(image)  # resize? center crop? dlib face?
 
@@ -75,6 +100,10 @@ while True:
     if (k == ord('q')) or (k%256 == 27):
         print("Quitting...")
         break
+
+    if (k == ord('a')):
+        aligning_faces = not aligning_faces
+        print("Aligning:", aligning_faces)
 
     if (k == ord('x')) or (k%256 == 32):
         # SPACE pressed
