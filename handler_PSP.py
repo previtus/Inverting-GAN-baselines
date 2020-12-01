@@ -89,13 +89,13 @@ class PSP_Handler(GenericHandler):
 
         tmp = image_tensor.unsqueeze(0)
         # get latent vector to inject into our input image
+        latent_to_inject = None
         """
         vec_to_inject = np.random.randn(1, 512).astype('float32')
-        _, latent_to_inject = net(torch.from_numpy(vec_to_inject).to("cuda"),
+        _, latent_to_inject = self.net(torch.from_numpy(vec_to_inject).to("cuda"),
                                       input_code=True,
                                       return_latents=True)
         """
-        latent_to_inject = None
         latent_mask = None
         image_tensor_on_cuda = tmp[0].unsqueeze(0).to("cuda").float()
 

@@ -57,6 +57,7 @@ class GenericHandler:
         img_name = image_path+str(self.saved_counter).zfill(4)+".png"
         cv2.imwrite(img_name, image)
         print("{} written!".format(img_name))
+        self.saved_counter += 1
 
 
 
