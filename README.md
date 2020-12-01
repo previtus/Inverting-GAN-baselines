@@ -61,6 +61,18 @@ conda activate in-domain-gan
 python ...
 ```
 
+## Instalation of libraries
+
+Follow whatever each of the code repos needs (more instructions might be added). Some needed libraries:
+
+
+```
+# install dlib - this worked the best:
+wget http://dlib.net/files/dlib-19.21.tar.bz2
+tar -xvf dlib-19.21.tar.bz2
+cd dlib-19.21
+python setup.py install
+```
 
 
 # Full Commands:
