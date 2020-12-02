@@ -6,6 +6,15 @@ handler = PSP_Handler()
 handler.report()
 handler.load_model()
 
+
+"""
+# PS: this is pretty hacky - the encoder encodes completely different vectors than the decoder needs - expect glitches
+override_gen = "/home/vitek/Vitek/python_codes/stylegan2-pytorch-useforconversion/stylegan2-horse-config-f.pt"
+override_gen = "/home/vitek/Vitek/python_codes/stylegan2-pytorch-useforconversion/stylegan2-cat-config-f.pt"
+override_gen = "/home/vitek/Vitek/python_codes/pixel2style2pixel/pretrained_models/network-snapshot-000000.pt"
+handler.load_custom_generator(override_gen)
+"""
+
 #########################################################################
 
 from timeit import default_timer as timer

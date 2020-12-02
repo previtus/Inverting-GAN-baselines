@@ -73,6 +73,25 @@ class PSP_Handler(GenericHandler):
         self.net = net
         self.opts = opts
 
+    def load_custom_generator(self, path_to_generator):
+        print("RELOADING DECODER FROM >>>>", path_to_generator)
+        ckpt = torch.load(path_to_generator)
+        self.net.decoder.load_state_dict(ckpt['g_ema'], strict=False)
+
+        def load_latent_avg(ckpt, repeat=None):
+            if 'latent_avg' in ckpt:
+                self.net.latent_avg = ckpt['latent_avg'].to(self.net.opts.device)
+                if repeat is not None:
+                    self.net.latent_avg = self.net.latent_avg.repeat(repeat, 1)
+            else:
+                self.net.latent_avg = None
+
+        learn_in_w = False # if true then it only had w of 512 dims, by default its w+ of 18*512
+        if learn_in_w:
+            load_latent_avg(ckpt, repeat=1)
+        else:
+            load_latent_avg(ckpt, repeat=18)
+
     def preprocess_image(self, image):
         input_image = Image.fromarray(image, 'RGB')
         img_transforms = self.EXPERIMENT_ARGS['transform']

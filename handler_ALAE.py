@@ -93,6 +93,9 @@ class ALAE_Handler(GenericHandler):
         extra_checkpoint_data = self.checkpointer.load(ignore_last_checkpoint=False, file_name=model_path)
         self.model.eval()
 
+    def load_custom_generator(self, path_to_generator):
+        print("only Pixel2Style2Pixel model!")
+        assert False
 
     def preprocess_image(self, image):
         # Expected input: image in numpy
