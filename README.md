@@ -79,6 +79,7 @@ python setup.py install
 
 
 ```
+# Adjust to your paths! This uses the CUDA installation we prepared above and code specific environments ...
 
 ## test alae
 source /home/vitek/cuda-10.0-env
@@ -94,3 +95,8 @@ cd /home/vitek/Vitek/python_codes/Inverting-GAN-baselines/
 python pixel2style2pixel_demos.py
 
 ```
+
+# Video demo:
+
+See the initial demo video at: https://www.youtube.com/watch?v=p3qmJRmfzGs
+Tested on Razer Blade 15 Advanced Model from 2020 (GPU: GeForce RTX 2080 with Max-Q Design (8GB laptop gpu), OS: Ubuntu 18.04, CUDA 10.0)
