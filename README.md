@@ -81,6 +81,7 @@ python setup.py install
 
 ```
 # Adjust to your paths! This uses the CUDA installation we prepared above and code specific environments ...
+# PS: also remember to change "REPO_PATH" in both ALAE_demos.py and pixel2style2pixel_demos.py to point to where you cloned the original repos.
 
 ## test alae
 source /home/vitek/cuda-10.0-env
