@@ -4,18 +4,19 @@ Exploring methods of inverting GANs (projecting from the data space / image spac
 
 ## Explored papers
 
-| paper                                          | code available | compatability details | notes                                                                                                |
-|------------------------------------------------|----------------|-----------------------|------------------------------------------------------------------------------------------------------|
-| In-Domain GAN Inversion for Real Image Editing          | available      | TF 1.12, CUDA 9       | encode + optimize, not real-time, focus on semantically meaningful embedding, paper presents 256x256 |
-| Image2StyleGAN / Image2StyleGAN++                       | nope           |                       | slow, best reconstructed quality, might not be the most semantically meaningful                      |
-| public Encoder to StyleGAN implementations              | multiple       | (depends)             | fast, relatively low quality                                                                         |
-| Adversarial Latent Autoencoders                         | available      | Pytorch               | (fast, need to test ...)                                                                             |
-| Encoding in Style: A StyleGAN Encoder for Image-to-Image Translation | available   |  Pytorch    | (fast, need to test ...)                                                                             |
-| _(More to be added)_                                      |                |                       |                                                                                                      |
+| paper                                          | code available | compatability details | notes                                                                                                | fps* |
+|------------------------------------------------|----------------|-----------------------|------------------------------------------------------------------------------------------------------|-----|
+| In-Domain GAN Inversion for Real Image Editing          | available      | TF 1.12, CUDA 9       | encode + optimize, not real-time, focus on semantically meaningful embedding, paper presents 256x256 | |
+| Image2StyleGAN / Image2StyleGAN++                       | nope           |                       | slow, best reconstructed quality, might not be the most semantically meaningful                      | |
+| public Encoder to StyleGAN implementations              | multiple       | (depends)             | fast, relatively low quality                                                                         | |
+| Adversarial Latent Autoencoders                         | available      | Pytorch               | (fast, need to test ...)                                                                             | 11 fps |
+| Encoding in Style: A StyleGAN Encoder for Image-to-Image Translation | available   |  Pytorch    | (fast, need to test ...)                                                                             | 5.7 fps |
+| _(More to be added)_                                      |                |                       |                                                                                                      | |
 
 
 [//]: # (|                                                       |                |                       |                                                 |)
 
+_fps*: run on Razer Blade 15 Advanced Model from 2020 (GPU: GeForce RTX 2080 with Max-Q Design (8GB laptop gpu), OS: Ubuntu 18.04, CUDA 10.0)_
 
 ## Preparation
 
@@ -99,4 +100,3 @@ python pixel2style2pixel_demos.py
 # Video demo:
 
 See the initial demo video at: https://www.youtube.com/watch?v=p3qmJRmfzGs
-Tested on Razer Blade 15 Advanced Model from 2020 (GPU: GeForce RTX 2080 with Max-Q Design (8GB laptop gpu), OS: Ubuntu 18.04, CUDA 10.0)
